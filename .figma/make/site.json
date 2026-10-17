@@ -1,0 +1,10 @@
+{
+  "description": "Explore Rugambwa Safaris Lodge, offering serene accommodations, transport, and meals in the scenic Kigezi highlands, with insights on founder Rugambwa Gloria.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
