@@ -3,6 +3,11 @@ import lodgeAFrame from "./assets/lodge-a-frame.png";
 import lodgeGarden from "./assets/lodge-garden.png";
 import lodgeRoom from "./assets/lodge-room.png";
 import lodgeVeranda from "./assets/lodge-veranda.png";
+import gazeboFireplace from "./assets/gazebo_fireplace.jpeg";
+import backyard from "./assets/bachyard.jpeg";
+import cozyBedroom from "./assets/cozy_bedroom.jpeg";
+import gazeboFeels from "./assets/gazebo_feels.jpeg";
+import outdoorCard from "./assets/outdoor_card.jpeg";
 
 const photos = {
   hero: lodgeGarden,
@@ -55,6 +60,10 @@ const services = [
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [sent, setSent] = useState(false);
+
+  if (window.location.pathname === "/stay") {
+    return <StayPage />;
+  }
 
   const submitBooking = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -154,7 +163,12 @@ export default function App() {
                 <span>{service.number}</span>
                 <h3>{service.title}</h3>
                 <p>{service.text}</p>
-                <a href="#book" aria-label={`Enquire about ${service.title}`}><ArrowIcon /></a>
+                <a
+                  href={service.title === "Stay" ? "/stay" : "#book"}
+                  aria-label={service.title === "Stay" ? "Explore our stay" : `Enquire about ${service.title}`}
+                >
+                  <ArrowIcon />
+                </a>
               </article>
             ))}
           </div>
@@ -253,6 +267,110 @@ export default function App() {
           <span>Hospitality, naturally.</span>
         </div>
       </footer>
+    </main>
+  );
+}
+
+function StayPage() {
+  return (
+    <main className="stay-page">
+      <header className="stay-header shell">
+        <a className="brand stay-brand" href="/" aria-label="Rugambwa Safaris Lodge home">
+          <LeafMark />
+          <span>
+            Rugambwa
+            <small>Safaris Lodge</small>
+          </span>
+        </a>
+        <a className="text-link" href="/">Back to the lodge <ArrowIcon /></a>
+      </header>
+
+      <section className="stay-intro shell">
+        <p className="eyebrow">Stay a little longer</p>
+        <h1>Find your quiet<br /><em>place to unwind.</em></h1>
+        <p>Gather around the fire, take in the gardens, and make room for a slower moment at Rugambwa Safaris Lodge.</p>
+      </section>
+
+      <section className="stay-features shell" aria-label="Places to relax">
+        <article className="stay-feature">
+          <img src={gazeboFireplace} alt="Outdoor gazebo with a warm, hand-laid fireplace" />
+          <div className="stay-feature-copy">
+            <p className="eyebrow">01 / Fireside evenings</p>
+            <h2>The fireplace<br /><em>gazebo.</em></h2>
+            <p>
+              Escape the chill of the evening air inside our beautifully crafted
+              outdoor pavilion. Anchored by a majestic, hand-laid hearth, the
+              fireplace gazebo offers a private, starlit haven for cozying up
+              with someone special. Sip a glass of wine to the rhythmic dance
+              of the flames, wrap yourselves in plush blankets, and let the
+              ambient glow melt the rest of the world away.
+            </p>
+          </div>
+        </article>
+        <article className="stay-feature stay-feature-reverse">
+          <img src={backyard} alt="Peaceful landscaped backyard and pavilion at the lodge" />
+          <div className="stay-feature-copy">
+            <p className="eyebrow">02 / A peaceful pause</p>
+            <h2>A breath of<br /><em>fresh air.</em></h2>
+            <p>
+              Step away from the road and into a moment of pure relaxation.
+              Surrounded by beautifully landscaped grounds, our pavilion
+              fireplace serves as the perfect roadside sanctuary. Unwind by the
+              gentle warmth of the hearth, stretch your legs, and enjoy a quiet
+              moment to recharge before continuing your journey. It is more
+              than just a stop—it is a peaceful breath of fresh air.
+            </p>
+          </div>
+        </article>
+        <article className="stay-feature">
+          <img src={cozyBedroom} alt="Warm lodge bedroom with a thatched ceiling and a view of the greenery" />
+          <div className="stay-feature-copy">
+            <p className="eyebrow">03 / Rest well</p>
+            <h2>Your own<br /><em>quiet retreat.</em></h2>
+            <p>
+              After a day exploring the highlands, come back to a welcoming room
+              made for slowing down. Settle into the comfortable bed, enjoy a
+              warm drink, and take in the garden through the open windows. Here,
+              restful nights and gentle mornings come naturally.
+            </p>
+          </div>
+        </article>
+        <article className="stay-feature stay-feature-reverse">
+          <img src={gazeboFeels} alt="Garden sign welcoming family, friends, and guests to relax and enjoy" />
+          <div className="stay-feature-copy">
+            <p className="eyebrow">04 / Together outdoors</p>
+            <h2>Make time<br /><em>for each other.</em></h2>
+            <p>
+              Gather your favourite people and let the day unfold at its own
+              pace. Share stories, enjoy something delicious, and raise a glass
+              in the greenery. Whether it is a family catch-up or a
+              relaxed evening with friends, this is a lovely place to feel at
+              home together.
+            </p>
+          </div>
+        </article>
+        <article className="stay-feature">
+          <img src={outdoorCard} alt="Shaded outdoor lounge with cushioned seating beneath a thatched pavilion" />
+          <div className="stay-feature-copy">
+            <p className="eyebrow">05 / The garden lounge</p>
+            <h2>Settle into<br /><em>the outdoors.</em></h2>
+            <p>
+              Find a comfortable seat beneath the thatched pavilion and enjoy a
+              little pause in the open air. Surrounded by tropical greenery, it
+              is an inviting spot for a quiet conversation, a refreshing drink,
+              or simply watching the afternoon drift by.
+            </p>
+          </div>
+        </article>
+      </section>
+
+      <section className="stay-cta">
+        <div className="shell">
+          <p className="eyebrow light">Your highland escape awaits</p>
+          <h2>Make room for<br /><em>a slower moment.</em></h2>
+          <a className="button button-light" href="/#book">Plan your stay <ArrowIcon /></a>
+        </div>
+      </section>
     </main>
   );
 }
