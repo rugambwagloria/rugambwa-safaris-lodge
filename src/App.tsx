@@ -3,11 +3,11 @@ import lodgeAFrame from "./assets/lodge-a-frame.png";
 import lodgeGarden from "./assets/lodge-garden.png";
 import lodgeRoom from "./assets/lodge-room.png";
 import lodgeVeranda from "./assets/lodge-veranda.png";
-import gazeboFireplace from "./assets/gazebo_fireplace.jpeg";
-import backyard from "./assets/bachyard.jpeg";
-import cozyBedroom from "./assets/cozy_bedroom.jpeg";
-import gazeboFeels from "./assets/gazebo_feels.jpeg";
-import outdoorCard from "./assets/outdoor_card.jpeg";
+import gazeboFireplace from "./assets/gazebo_fireplace.png";
+import backyard from "./assets/bachyard.png";
+import cozyBedroom from "./assets/cozy_bedroom.png";
+import gazeboFeels from "./assets/gazebo_feels.png";
+import outdoorCard from "./assets/outdoor_card.png";
 
 const photos = {
   hero: lodgeGarden,
