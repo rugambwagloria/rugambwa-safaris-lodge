@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import lodgeAFrame from "./assets/lodge-a-frame.png";
 import lodgeGarden from "./assets/lodge-garden.png";
 import lodgeRoom from "./assets/lodge-room.png";
@@ -42,6 +42,48 @@ function LeafMark() {
       <path d="M8.5 35.5c5.4-8.2 11.5-13.6 21.8-18.9" />
     </svg>
   );
+}
+
+function useScrollReveals(pageSelector: string) {
+  useEffect(() => {
+    const page = document.querySelector(pageSelector);
+    if (!page) return;
+
+    const targets = page.querySelectorAll<HTMLElement>(
+      ".dine-intro > p:last-child, .dine-feature-copy, .explore-intro > p:last-child, .explore-feature-copy",
+    );
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      targets.forEach((target) => target.classList.add("is-visible"));
+      return;
+    }
+
+    if (!("IntersectionObserver" in window)) {
+      targets.forEach((target) => target.classList.add("is-visible"));
+      return;
+    }
+
+    page.classList.add("scroll-reveals-ready");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: "0px 0px -10% 0px", threshold: 0.12 },
+    );
+
+    targets.forEach((target) => observer.observe(target));
+
+    return () => {
+      observer.disconnect();
+      page.classList.remove("scroll-reveals-ready");
+    };
+  }, [pageSelector]);
 }
 
 const services = [
@@ -418,6 +460,8 @@ function StayPage() {
 }
 
 function DinePage() {
+  useScrollReveals(".dine-page");
+
   return (
     <main className="dine-page">
       <header className="stay-header shell">
@@ -452,7 +496,9 @@ function DinePage() {
 
       <section className="dine-features shell" aria-label="Dining at Rugambwa">
         <article className="dine-feature">
-          <img src={nightDining} alt="Lantern-lit garden dining beneath trees at night" />
+          <figure className="dine-image-frame">
+            <img src={nightDining} alt="Lantern-lit garden dining beneath trees at night" />
+          </figure>
           <div className="dine-feature-copy">
             <p className="eyebrow">01 / Under the stars</p>
             <h2>Garden<br /><em>dining.</em></h2>
@@ -468,7 +514,9 @@ function DinePage() {
           </div>
         </article>
         <article className="dine-feature dine-feature-reverse">
-          <img src={roasts} alt="Flame-grilled meat skewers served on fresh banana leaves" />
+          <figure className="dine-image-frame">
+            <img src={roasts} alt="Flame-grilled meat skewers served on fresh banana leaves" />
+          </figure>
           <div className="dine-feature-copy">
             <p className="eyebrow">02 / The safari grill</p>
             <h2>Skewers on<br /><em>banana leaf.</em></h2>
@@ -483,7 +531,9 @@ function DinePage() {
           </div>
         </article>
         <article className="dine-feature">
-          <img src={meals} alt="Golden plantain and banana chips in baskets lined with banana leaves" />
+          <figure className="dine-image-frame">
+            <img src={meals} alt="Golden plantain and banana chips in baskets lined with banana leaves" />
+          </figure>
           <div className="dine-feature-copy">
             <p className="eyebrow">03 / A golden little something</p>
             <h2>Crispy plantain<br /><em>&amp; banana chips.</em></h2>
@@ -498,7 +548,9 @@ function DinePage() {
           </div>
         </article>
         <article className="dine-feature dine-feature-reverse">
-          <img src={drinks} alt="Fresh fruit coolers and citrus drinks served over ice in the garden" />
+          <figure className="dine-image-frame">
+            <img src={drinks} alt="Fresh fruit coolers and citrus drinks served over ice in the garden" />
+          </figure>
           <div className="dine-feature-copy">
             <p className="eyebrow">04 / Fresh coolers &amp; sundowners</p>
             <h2>A little<br /><em>refreshment.</em></h2>
@@ -622,6 +674,8 @@ function TravelPage() {
 }
 
 function ExplorePage() {
+  useScrollReveals(".explore-page");
+
   return (
     <main className="explore-page">
       <header className="stay-header shell">
@@ -658,7 +712,9 @@ function ExplorePage() {
 
       <section className="explore-features shell" id="explore-activities" aria-label="Things to explore">
         <article className="explore-feature">
-          <img src={forestWalks} alt="Shaded forest trail winding beneath a canopy of trees" />
+          <figure className="explore-image-frame">
+            <img src={forestWalks} alt="Shaded forest trail winding beneath a canopy of trees" />
+          </figure>
           <div className="explore-feature-copy">
             <p className="eyebrow">01 / Forest trails</p>
             <h2>Walk beneath<br /><em>the canopy.</em></h2>
@@ -674,7 +730,9 @@ function ExplorePage() {
           </div>
         </article>
         <article className="explore-feature explore-feature-reverse">
-          <img src={fishing} alt="Local fishermen casting a net from wooden boats at sunset" />
+          <figure className="explore-image-frame">
+            <img src={fishing} alt="Local fishermen casting a net from wooden boats at sunset" />
+          </figure>
           <div className="explore-feature-copy">
             <p className="eyebrow">02 / Sunset fishing</p>
             <h2>Life along<br /><em>the river.</em></h2>
@@ -690,7 +748,9 @@ function ExplorePage() {
           </div>
         </article>
         <article className="explore-feature">
-          <img src={communityGathering} alt="Guests and local artisans gathered around a creative workshop table" />
+          <figure className="explore-image-frame">
+            <img src={communityGathering} alt="Guests and local artisans gathered around a creative workshop table" />
+          </figure>
           <div className="explore-feature-copy">
             <p className="eyebrow">03 / Craft circles</p>
             <h2>Create together<br /><em>under the trees.</em></h2>
@@ -706,7 +766,9 @@ function ExplorePage() {
           </div>
         </article>
         <article className="explore-feature explore-feature-reverse">
-          <img src={craftMarket} alt="Handmade crafts, ceramics and woven goods at a local craft market" />
+          <figure className="explore-image-frame">
+            <img src={craftMarket} alt="Handmade crafts, ceramics and woven goods at a local craft market" />
+          </figure>
           <div className="explore-feature-copy">
             <p className="eyebrow">04 / The craft market</p>
             <h2>Handmade<br /><em>to take home.</em></h2>
@@ -721,7 +783,9 @@ function ExplorePage() {
           </div>
         </article>
         <article className="explore-feature">
-          <img src={vegetery} alt="Fresh lettuces and leafy vegetables growing in the lodge kitchen garden" />
+          <figure className="explore-image-frame">
+            <img src={vegetery} alt="Fresh lettuces and leafy vegetables growing in the lodge kitchen garden" />
+          </figure>
           <div className="explore-feature-copy">
             <p className="eyebrow">05 / The kitchen garden</p>
             <h2>From soil<br /><em>to supper.</em></h2>
