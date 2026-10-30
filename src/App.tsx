@@ -13,6 +13,11 @@ import roasts from "./assets/roasts.png";
 import meals from "./assets/meals.png";
 import fineDine from "./assets/fine dine.png";
 import drinks from "./assets/drinks.png";
+import fishing from "./assets/fishing.png";
+import communityGathering from "./assets/community gathering.png";
+import craftMarket from "./assets/craft market.png";
+import vegetery from "./assets/vegetery.png";
+import forestWalks from "./assets/forestwalks.png";
 
 const photos = {
   hero: lodgeGarden,
@@ -72,6 +77,14 @@ export default function App() {
 
   if (window.location.pathname === "/dine") {
     return <DinePage />;
+  }
+
+  if (window.location.pathname === "/travel") {
+    return <TravelPage />;
+  }
+
+  if (window.location.pathname === "/explore") {
+    return <ExplorePage />;
   }
 
   const submitBooking = (event: FormEvent<HTMLFormElement>) => {
@@ -173,13 +186,27 @@ export default function App() {
                 <h3>{service.title}</h3>
                 <p>{service.text}</p>
                 <a
-                  href={service.title === "Stay" ? "/stay" : service.title === "Dine" ? "/dine" : "#book"}
+                  href={
+                    service.title === "Stay"
+                      ? "/stay"
+                      : service.title === "Dine"
+                        ? "/dine"
+                        : service.title === "Travel"
+                          ? "/travel"
+                          : service.title === "Explore"
+                            ? "/explore"
+                          : "#book"
+                  }
                   aria-label={
                     service.title === "Stay"
                       ? "Explore our stay"
                       : service.title === "Dine"
                         ? "Explore dining at the lodge"
-                        : `Enquire about ${service.title}`
+                        : service.title === "Travel"
+                          ? "Explore travel services"
+                          : service.title === "Explore"
+                            ? "Explore activities at the lodge"
+                          : `Enquire about ${service.title}`
                   }
                 >
                   <ArrowIcon />
@@ -492,6 +519,229 @@ function DinePage() {
         <div className="shell">
           <p className="eyebrow light">Good food tastes better together</p>
           <h2>Pull up a chair.<br /><em>Stay for supper.</em></h2>
+          <a className="button button-light" href="/#book">Plan your stay <ArrowIcon /></a>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+function TravelPage() {
+  return (
+    <main className="travel-page">
+      <header className="stay-header shell">
+        <a className="brand stay-brand" href="/" aria-label="Rugambwa Safaris Lodge home">
+          <LeafMark />
+          <span>
+            Rugambwa
+            <small>Safaris Lodge</small>
+          </span>
+        </a>
+        <a className="text-link" href="/">Back to the lodge <ArrowIcon /></a>
+      </header>
+
+      <section className="travel-hero shell">
+        <img src={photos.road} alt="A quiet road winding through the green hills of Uganda" />
+        <div className="travel-hero-shade" />
+        <div className="travel-hero-copy">
+          <p className="eyebrow light">The highlands are closer than you think</p>
+          <h1>The road ahead.<br /><em>Handled with care.</em></h1>
+          <p>Reliable transport for airport transfers, local excursions, and your onward safari.</p>
+          <a className="button button-light" href="/#contact">Plan your journey <ArrowIcon /></a>
+        </div>
+        <span className="travel-hero-note">Southwestern Uganda · Kigezi Highlands</span>
+      </section>
+
+      <section className="travel-intro shell">
+        <p className="eyebrow">From here to wherever next</p>
+        <p>
+          Getting there should feel like part of the adventure. Tell our team
+          where your journey begins and where you’d like to go, and we’ll help
+          arrange transport around your stay and travel plans.
+        </p>
+      </section>
+
+      <section className="travel-options shell" aria-label="Travel services">
+        <div className="travel-section-heading">
+          <div>
+            <p className="eyebrow">A smoother way to explore</p>
+            <h2>Three ways<br />to <em>get moving.</em></h2>
+          </div>
+          <p>One thoughtful team to help you make the most of the journey, near and far.</p>
+        </div>
+        <div className="travel-card-grid">
+          <article className="travel-card">
+            <span className="travel-card-number">01</span>
+            <div className="travel-card-mark" aria-hidden="true">↗</div>
+            <p className="eyebrow">A warm welcome</p>
+            <h3>Airport<br /><em>transfers.</em></h3>
+            <p>Arrive with one less thing to think about. Arrange a pickup to the lodge or transport for your onward departure.</p>
+          </article>
+          <article className="travel-card travel-card-featured">
+            <span className="travel-card-number">02</span>
+            <div className="travel-card-mark" aria-hidden="true">⌖</div>
+            <p className="eyebrow">Take the scenic route</p>
+            <h3>Local<br /><em>excursions.</em></h3>
+            <p>Explore the Kigezi region at your own pace, with local transport planned around the places you’d like to visit.</p>
+          </article>
+          <article className="travel-card">
+            <span className="travel-card-number">03</span>
+            <div className="travel-card-mark" aria-hidden="true">→</div>
+            <p className="eyebrow">Keep the adventure going</p>
+            <h3>Your onward<br /><em>safari.</em></h3>
+            <p>Heading to your next stop? Let us know your itinerary and we’ll help coordinate the next leg of your journey.</p>
+          </article>
+        </div>
+      </section>
+
+      <section className="travel-planning">
+        <div className="shell travel-planning-wrap">
+          <div>
+            <p className="eyebrow light">A few details make all the difference</p>
+            <h2>Let’s make a<br /><em>good plan.</em></h2>
+            <p>Share what you know so far. Our team can help you work out the rest.</p>
+            <a className="button button-light" href="/#contact">Talk to our team <ArrowIcon /></a>
+          </div>
+          <div className="travel-checklist">
+            <p><span>01</span> Where you’d like to be picked up and dropped off</p>
+            <p><span>02</span> Your travel date and preferred timing</p>
+            <p><span>03</span> How many people are travelling</p>
+            <p><span>04</span> Your next stop or excursion plans</p>
+            <p><span>05</span> Any luggage or accessibility needs</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="travel-cta shell">
+        <p className="eyebrow">Your journey, your pace</p>
+        <h2>Tell us where<br /><em>you’re headed.</em></h2>
+        <a className="text-link" href="/#contact">Get in touch to plan your trip <ArrowIcon /></a>
+      </section>
+    </main>
+  );
+}
+
+function ExplorePage() {
+  return (
+    <main className="explore-page">
+      <header className="stay-header shell">
+        <a className="brand stay-brand" href="/" aria-label="Rugambwa Safaris Lodge home">
+          <LeafMark />
+          <span>
+            Rugambwa
+            <small>Safaris Lodge</small>
+          </span>
+        </a>
+        <a className="text-link" href="/">Back to the lodge <ArrowIcon /></a>
+      </header>
+
+      <section className="explore-hero shell">
+        <img src={photos.road} alt="Green hills and a quiet road in southwestern Uganda" />
+        <div className="explore-hero-shade" />
+        <div className="explore-hero-copy">
+          <p className="eyebrow light">Beyond the lodge</p>
+          <h1>Step outside.<br /><em>Find your wild.</em></h1>
+          <p>Meet the landscape, traditions and people that make this place feel like nowhere else.</p>
+          <a className="button button-light" href="#explore-activities">Explore the highlands <ArrowIcon /></a>
+        </div>
+        <span className="explore-hero-note">Kigezi Highlands · Southwestern Uganda</span>
+      </section>
+
+      <section className="explore-intro shell">
+        <p className="eyebrow">A little closer to nature</p>
+        <p>
+          Beyond the lodge, Rugambwa opens onto forest trails, a working river,
+          local craft traditions and gardens that feed our kitchen. Slow down,
+          step outside and discover the landscape and the people who shape it.
+        </p>
+      </section>
+
+      <section className="explore-features shell" id="explore-activities" aria-label="Things to explore">
+        <article className="explore-feature">
+          <img src={forestWalks} alt="Shaded forest trail winding beneath a canopy of trees" />
+          <div className="explore-feature-copy">
+            <p className="eyebrow">01 / Forest trails</p>
+            <h2>Walk beneath<br /><em>the canopy.</em></h2>
+            <p className="explore-tagline">Sun-dappled walks through the trees</p>
+            <p>
+              Follow sun-dappled paths through tall, whispering trees and mossy
+              hillsides. Our guided forest walks are gentle and unhurried, with
+              time to listen for birdsong, spot wildlife and breathe in the cool,
+              green air. Go out in the early morning for soft golden light, or
+              in the late afternoon when the forest glows. Suitable for all
+              fitness levels.
+            </p>
+          </div>
+        </article>
+        <article className="explore-feature explore-feature-reverse">
+          <img src={fishing} alt="Local fishermen casting a net from wooden boats at sunset" />
+          <div className="explore-feature-copy">
+            <p className="eyebrow">02 / Sunset fishing</p>
+            <h2>Life along<br /><em>the river.</em></h2>
+            <p className="explore-tagline">Cast nets at golden hour</p>
+            <p>
+              Join local fishermen on the water as the sky turns amber and gold.
+              Watch them cast their nets from traditional wooden boats, a skill
+              passed down through generations, and see the day’s catch hauled
+              in. It’s a quiet, authentic look at river life, and a favourite
+              for photographers. The fresh catch can be enjoyed at the lodge’s
+              dining table.
+            </p>
+          </div>
+        </article>
+        <article className="explore-feature">
+          <img src={communityGathering} alt="Guests and local artisans gathered around a creative workshop table" />
+          <div className="explore-feature-copy">
+            <p className="eyebrow">03 / Craft circles</p>
+            <h2>Create together<br /><em>under the trees.</em></h2>
+            <p className="explore-tagline">Create something with local artisans</p>
+            <p>
+              Sit together under the trees and make something with your hands.
+              Our outdoor workshops bring guests and skilled local artisans
+              around shared tables for jewellery-making, natural crafts and
+              creative sessions, surrounded by greenery. Tools and materials
+              are provided, no experience is needed, and you leave with a
+              keepsake made by you.
+            </p>
+          </div>
+        </article>
+        <article className="explore-feature explore-feature-reverse">
+          <img src={craftMarket} alt="Handmade crafts, ceramics and woven goods at a local craft market" />
+          <div className="explore-feature-copy">
+            <p className="eyebrow">04 / The craft market</p>
+            <h2>Handmade<br /><em>to take home.</em></h2>
+            <p className="explore-tagline">Handmade treasures to take home</p>
+            <p>
+              Browse a curated selection of handmade goods from local makers:
+              woven baskets and wall pieces, hand-thrown ceramics, candles,
+              carved wooden decor and more. Each item is crafted by hand, so
+              every purchase supports the artisans in our community and gives
+              you a meaningful souvenir to take home.
+            </p>
+          </div>
+        </article>
+        <article className="explore-feature">
+          <img src={vegetery} alt="Fresh lettuces and leafy vegetables growing in the lodge kitchen garden" />
+          <div className="explore-feature-copy">
+            <p className="eyebrow">05 / The kitchen garden</p>
+            <h2>From soil<br /><em>to supper.</em></h2>
+            <p className="explore-tagline">From soil to supper</p>
+            <p>
+              Walk the rows of our organic garden, where crisp lettuces, leafy
+              greens, herbs and fruit trees grow in the open air with the hills
+              as a backdrop. Much of what you see here ends up on your plate,
+              so you can meet your meal before you eat it. Garden tours are
+              relaxed and informative, and our team is happy to share how we
+              grow.
+            </p>
+          </div>
+        </article>
+      </section>
+
+      <section className="stay-cta">
+        <div className="shell">
+          <p className="eyebrow light">The best moments happen outdoors</p>
+          <h2>Take the long way.<br /><em>Stay a little longer.</em></h2>
           <a className="button button-light" href="/#book">Plan your stay <ArrowIcon /></a>
         </div>
       </section>
