@@ -109,10 +109,31 @@ function SiteHeader() {
         aria-label="Site navigation"
         aria-hidden={!menuOpen}
       >
-        <a href="/stay" aria-current={window.location.pathname === "/stay" ? "page" : undefined} onClick={closeMenu}>Stay</a>
-        <a href="/dine" aria-current={window.location.pathname === "/dine" ? "page" : undefined} onClick={closeMenu}>Dine</a>
-        <a href="/travel" aria-current={window.location.pathname === "/travel" ? "page" : undefined} onClick={closeMenu}>Travel</a>
-        <a href="/explore" aria-current={window.location.pathname === "/explore" ? "page" : undefined} onClick={closeMenu}>Explore</a>
+        <div className="site-menu-heading">
+          <p className="eyebrow light">Your stay, your way</p>
+          <h2>Find your next<br /><em>moment.</em></h2>
+        </div>
+        <div className="site-menu-links">
+          <a href="/" aria-current={window.location.pathname === "/" ? "page" : undefined} onClick={closeMenu}>
+            <span className="site-menu-number">01</span><span className="site-menu-label">Home</span><ArrowIcon />
+          </a>
+          <a href="/stay" aria-current={window.location.pathname === "/stay" ? "page" : undefined} onClick={closeMenu}>
+            <span className="site-menu-number">02</span><span className="site-menu-label">Stay</span><ArrowIcon />
+          </a>
+          <a href="/dine" aria-current={window.location.pathname === "/dine" ? "page" : undefined} onClick={closeMenu}>
+            <span className="site-menu-number">03</span><span className="site-menu-label">Dine</span><ArrowIcon />
+          </a>
+          <a href="/travel" aria-current={window.location.pathname === "/travel" ? "page" : undefined} onClick={closeMenu}>
+            <span className="site-menu-number">04</span><span className="site-menu-label">Travel</span><ArrowIcon />
+          </a>
+          <a href="/explore" aria-current={window.location.pathname === "/explore" ? "page" : undefined} onClick={closeMenu}>
+            <span className="site-menu-number">05</span><span className="site-menu-label">Explore</span><ArrowIcon />
+          </a>
+        </div>
+        <a className="site-menu-footer" href="/#book" onClick={closeMenu}>
+          <span>Ready when you are</span>
+          Plan your stay <ArrowIcon />
+        </a>
       </nav>
     </header>
   );

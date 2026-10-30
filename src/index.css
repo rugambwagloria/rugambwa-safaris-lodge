@@ -55,11 +55,23 @@ svg { width: 20px; fill: none; stroke: currentColor; stroke-linecap: round; stro
 .site-menu-button span { width: 18px; height: 1px; background: currentColor; transition: transform .2s; }
 .site-menu-button.is-open span:first-child { transform: translateY(4px) rotate(45deg); }
 .site-menu-button.is-open span:last-child { transform: translateY(-4px) rotate(-45deg); }
-.site-menu { position: absolute; top: calc(100% + 10px); right: max(24px, calc((100% - 1180px) / 2)); width: min(320px, calc(100vw - 32px)); padding: 14px; display: grid; background: var(--white); border: 1px solid var(--oat); box-shadow: 0 18px 48px rgba(14,43,30,.15); opacity: 0; visibility: hidden; transform: translateY(-8px); transition: opacity .2s, transform .2s, visibility .2s; }
+.site-menu { position: absolute; top: calc(100% + 12px); right: max(24px, calc((100% - 1180px) / 2)); width: min(390px, calc(100vw - 32px)); padding: 28px; display: grid; overflow: hidden; color: var(--cream); background: radial-gradient(ellipse at 100% 0, rgba(120,145,107,.28), transparent 42%), var(--forest-deep); border: 1px solid rgba(255,255,255,.14); box-shadow: 0 22px 60px rgba(14,43,30,.28); opacity: 0; visibility: hidden; transform: translateY(-10px) scale(.98); transform-origin: top right; transition: opacity .24s ease, transform .24s ease, visibility .24s; }
 .site-menu.is-open { opacity: 1; visibility: visible; transform: translateY(0); }
-.site-menu a { padding: 16px 14px; color: var(--forest); border-bottom: 1px solid var(--oat); font-family: "DM Serif Display", serif; font-size: 24px; transition: color .2s, background .2s; }
-.site-menu a:last-child { border-bottom: 0; }
-.site-menu a:hover, .site-menu a[aria-current="page"] { color: var(--clay); background: var(--cream); }
+.site-menu-heading { padding-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,.18); }
+.site-menu-heading .eyebrow { margin-bottom: 14px; font-size: 9px; }
+.site-menu-heading h2 { margin: 0; color: var(--cream); font-size: 34px; line-height: 1; }
+.site-menu-heading h2 em { color: #e8d2b4; }
+.site-menu-links { padding-top: 8px; }
+.site-menu-links a { min-height: 56px; padding: 8px 10px; display: grid; grid-template-columns: 30px 1fr 20px; align-items: center; gap: 12px; color: rgba(255,255,255,.78); border-bottom: 1px solid rgba(255,255,255,.14); transition: color .2s, background .2s, padding .2s; }
+.site-menu-number { color: #9aaf97; font-size: 9px; letter-spacing: .12em; }
+.site-menu-label { font-family: "DM Serif Display", serif; font-size: 23px; }
+.site-menu-links a svg { width: 17px; color: #d3c09d; opacity: 0; transform: translateX(-5px); transition: opacity .2s, transform .2s; }
+.site-menu-links a:hover, .site-menu-links a[aria-current="page"] { padding-inline: 14px 6px; color: #f0d6bd; background: rgba(255,255,255,.07); }
+.site-menu-links a:hover svg, .site-menu-links a[aria-current="page"] svg { opacity: 1; transform: translateX(0); }
+.site-menu-footer { margin-top: 20px; padding: 15px 16px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; color: var(--forest-deep); background: #e8d2b4; font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; transition: background .2s; }
+.site-menu-footer:hover { background: var(--white); }
+.site-menu-footer span { width: 100%; color: #6b7164; font-size: 9px; letter-spacing: .15em; }
+.site-menu-footer svg { width: 16px; }
 
 .hero { min-height: 760px; height: 100svh; position: relative; color: var(--white); overflow: hidden; }
 .hero-image, .hero-shade { position: absolute; inset: 0; height: 100%; object-fit: cover; }
@@ -393,7 +405,8 @@ footer { padding: 80px 0 24px; color: var(--cream); background: var(--forest-dee
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .site-header, .site-menu, .site-menu-button, .site-menu-button span {
+  .site-header, .site-menu, .site-menu-button, .site-menu-button span,
+  .site-menu-links a, .site-menu-links a svg, .site-menu-footer {
     transition: none;
   }
   .site-header.is-hidden { transform: none; }
