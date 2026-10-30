@@ -44,13 +44,87 @@ function LeafMark() {
   );
 }
 
+function SiteHeader() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const [scrolled, setScrolled] = useState(window.scrollY > 24);
+
+  useEffect(() => {
+    let previousY = window.scrollY;
+
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      setScrolled(currentY > 24);
+
+      if (currentY < 80) {
+        setHidden(false);
+      } else if (Math.abs(currentY - previousY) > 4) {
+        setHidden(currentY > previousY);
+      }
+
+      previousY = currentY;
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+  const closeMenu = () => setMenuOpen(false);
+
+  return (
+    <header className={`site-header${hidden && !menuOpen ? " is-hidden" : ""}${scrolled ? " is-scrolled" : ""}`}>
+      <div className="site-header-inner shell">
+        <a className="brand site-brand" href="/" aria-label="Rugambwa Safaris Lodge home" onClick={closeMenu}>
+          <LeafMark />
+          <span>
+            Rugambwa
+            <small>Safaris Lodge</small>
+          </span>
+        </a>
+        <button
+          className={`site-menu-button${menuOpen ? " is-open" : ""}`}
+          aria-label={menuOpen ? "Close site navigation" : "Open site navigation"}
+          aria-expanded={menuOpen}
+          aria-controls="site-navigation"
+          onClick={() => {
+            setHidden(false);
+            setMenuOpen(!menuOpen);
+          }}
+        >
+          <span /><span />
+        </button>
+      </div>
+      <nav
+        className={`site-menu${menuOpen ? " is-open" : ""}`}
+        id="site-navigation"
+        aria-label="Site navigation"
+        aria-hidden={!menuOpen}
+      >
+        <a href="/stay" aria-current={window.location.pathname === "/stay" ? "page" : undefined} onClick={closeMenu}>Stay</a>
+        <a href="/dine" aria-current={window.location.pathname === "/dine" ? "page" : undefined} onClick={closeMenu}>Dine</a>
+        <a href="/travel" aria-current={window.location.pathname === "/travel" ? "page" : undefined} onClick={closeMenu}>Travel</a>
+        <a href="/explore" aria-current={window.location.pathname === "/explore" ? "page" : undefined} onClick={closeMenu}>Explore</a>
+      </nav>
+    </header>
+  );
+}
+
 function useScrollReveals(pageSelector: string) {
   useEffect(() => {
     const page = document.querySelector(pageSelector);
     if (!page) return;
 
     const targets = page.querySelectorAll<HTMLElement>(
-      ".dine-intro > p:last-child, .dine-feature-copy, .explore-intro > p:last-child, .explore-feature-copy",
+      ".stay-feature-copy, .dine-feature-copy, .explore-feature-copy",
     );
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -110,7 +184,6 @@ const services = [
 ];
 
 export default function App() {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [sent, setSent] = useState(false);
 
   if (window.location.pathname === "/stay") {
@@ -136,33 +209,10 @@ export default function App() {
 
   return (
     <main>
+      <SiteHeader />
       <section className="hero" id="home">
         <img className="hero-image" src={photos.hero} alt="Garden lounge surrounded by lush greenery at Rugambwa Safaris Lodge" />
         <div className="hero-shade" />
-        <nav className="nav shell" aria-label="Main navigation">
-          <a className="brand" href="#home" aria-label="Rugambwa Safaris Lodge home">
-            <LeafMark />
-            <span>
-              Rugambwa
-              <small>Safaris Lodge</small>
-            </span>
-          </a>
-          <div className={`nav-links ${menuOpen ? "is-open" : ""}`}>
-            <a href="#stay" onClick={() => setMenuOpen(false)}>Stay</a>
-            <a href="#experience" onClick={() => setMenuOpen(false)}>Experience</a>
-            <a href="#about" onClick={() => setMenuOpen(false)}>Our story</a>
-            <a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a>
-          </div>
-          <a className="nav-book" href="#book">Plan your stay <ArrowIcon /></a>
-          <button
-            className="menu-button"
-            aria-label="Toggle navigation"
-            aria-expanded={menuOpen}
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            <span /><span />
-          </button>
-        </nav>
 
         <div className="hero-content shell">
           <p className="eyebrow light">Welcome to the highlands of Kigezi</p>
@@ -356,18 +406,11 @@ export default function App() {
 }
 
 function StayPage() {
+  useScrollReveals(".stay-page");
+
   return (
     <main className="stay-page">
-      <header className="stay-header shell">
-        <a className="brand stay-brand" href="/" aria-label="Rugambwa Safaris Lodge home">
-          <LeafMark />
-          <span>
-            Rugambwa
-            <small>Safaris Lodge</small>
-          </span>
-        </a>
-        <a className="text-link" href="/">Back to the lodge <ArrowIcon /></a>
-      </header>
+      <SiteHeader />
 
       <section className="stay-intro shell">
         <p className="eyebrow">Stay a little longer</p>
@@ -377,7 +420,9 @@ function StayPage() {
 
       <section className="stay-features shell" aria-label="Places to relax">
         <article className="stay-feature">
-          <img src={gazeboFireplace} alt="Outdoor gazebo with a warm, hand-laid fireplace" />
+          <figure className="stay-image-frame">
+            <img src={gazeboFireplace} alt="Outdoor gazebo with a warm, hand-laid fireplace" />
+          </figure>
           <div className="stay-feature-copy">
             <p className="eyebrow">01 / Fireside evenings</p>
             <h2>The fireplace<br /><em>gazebo.</em></h2>
@@ -392,7 +437,9 @@ function StayPage() {
           </div>
         </article>
         <article className="stay-feature stay-feature-reverse">
-          <img src={backyard} alt="Peaceful landscaped backyard and pavilion at the lodge" />
+          <figure className="stay-image-frame">
+            <img src={backyard} alt="Peaceful landscaped backyard and pavilion at the lodge" />
+          </figure>
           <div className="stay-feature-copy">
             <p className="eyebrow">02 / A peaceful pause</p>
             <h2>A breath of<br /><em>fresh air.</em></h2>
@@ -407,7 +454,9 @@ function StayPage() {
           </div>
         </article>
         <article className="stay-feature">
-          <img src={cozyBedroom} alt="Warm lodge bedroom with a thatched ceiling and a view of the greenery" />
+          <figure className="stay-image-frame">
+            <img src={cozyBedroom} alt="Warm lodge bedroom with a thatched ceiling and a view of the greenery" />
+          </figure>
           <div className="stay-feature-copy">
             <p className="eyebrow">03 / Rest well</p>
             <h2>Your own<br /><em>quiet retreat.</em></h2>
@@ -420,7 +469,9 @@ function StayPage() {
           </div>
         </article>
         <article className="stay-feature stay-feature-reverse">
-          <img src={gazeboFeels} alt="Garden sign welcoming family, friends, and guests to relax and enjoy" />
+          <figure className="stay-image-frame">
+            <img src={gazeboFeels} alt="Garden sign welcoming family, friends, and guests to relax and enjoy" />
+          </figure>
           <div className="stay-feature-copy">
             <p className="eyebrow">04 / Together outdoors</p>
             <h2>Make time<br /><em>for each other.</em></h2>
@@ -434,7 +485,9 @@ function StayPage() {
           </div>
         </article>
         <article className="stay-feature">
-          <img src={outdoorCard} alt="Shaded outdoor lounge with cushioned seating beneath a thatched pavilion" />
+          <figure className="stay-image-frame">
+            <img src={outdoorCard} alt="Shaded outdoor lounge with cushioned seating beneath a thatched pavilion" />
+          </figure>
           <div className="stay-feature-copy">
             <p className="eyebrow">05 / The garden lounge</p>
             <h2>Settle into<br /><em>the outdoors.</em></h2>
@@ -464,16 +517,7 @@ function DinePage() {
 
   return (
     <main className="dine-page">
-      <header className="stay-header shell">
-        <a className="brand stay-brand" href="/" aria-label="Rugambwa Safaris Lodge home">
-          <LeafMark />
-          <span>
-            Rugambwa
-            <small>Safaris Lodge</small>
-          </span>
-        </a>
-        <a className="text-link" href="/">Back to the lodge <ArrowIcon /></a>
-      </header>
+      <SiteHeader />
 
       <section className="dine-hero shell">
         <img src={fineDine} alt="Outdoor dining tables set beneath a leafy tree for an evening meal" />
@@ -581,16 +625,7 @@ function DinePage() {
 function TravelPage() {
   return (
     <main className="travel-page">
-      <header className="stay-header shell">
-        <a className="brand stay-brand" href="/" aria-label="Rugambwa Safaris Lodge home">
-          <LeafMark />
-          <span>
-            Rugambwa
-            <small>Safaris Lodge</small>
-          </span>
-        </a>
-        <a className="text-link" href="/">Back to the lodge <ArrowIcon /></a>
-      </header>
+      <SiteHeader />
 
       <section className="travel-hero shell">
         <img src={photos.road} alt="A quiet road winding through the green hills of Uganda" />
@@ -678,16 +713,7 @@ function ExplorePage() {
 
   return (
     <main className="explore-page">
-      <header className="stay-header shell">
-        <a className="brand stay-brand" href="/" aria-label="Rugambwa Safaris Lodge home">
-          <LeafMark />
-          <span>
-            Rugambwa
-            <small>Safaris Lodge</small>
-          </span>
-        </a>
-        <a className="text-link" href="/">Back to the lodge <ArrowIcon /></a>
-      </header>
+      <SiteHeader />
 
       <section className="explore-hero shell">
         <img src={photos.road} alt="Green hills and a quiet road in southwestern Uganda" />
