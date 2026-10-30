@@ -8,6 +8,11 @@ import backyard from "./assets/bachyard.png";
 import cozyBedroom from "./assets/cozy_bedroom.png";
 import gazeboFeels from "./assets/gazebo_feels.png";
 import outdoorCard from "./assets/outdoor_card.png";
+import nightDining from "./assets/night dining.png";
+import roasts from "./assets/roasts.png";
+import meals from "./assets/meals.png";
+import fineDine from "./assets/fine dine.png";
+import drinks from "./assets/drinks.png";
 
 const photos = {
   hero: lodgeGarden,
@@ -63,6 +68,10 @@ export default function App() {
 
   if (window.location.pathname === "/stay") {
     return <StayPage />;
+  }
+
+  if (window.location.pathname === "/dine") {
+    return <DinePage />;
   }
 
   const submitBooking = (event: FormEvent<HTMLFormElement>) => {
@@ -164,8 +173,14 @@ export default function App() {
                 <h3>{service.title}</h3>
                 <p>{service.text}</p>
                 <a
-                  href={service.title === "Stay" ? "/stay" : "#book"}
-                  aria-label={service.title === "Stay" ? "Explore our stay" : `Enquire about ${service.title}`}
+                  href={service.title === "Stay" ? "/stay" : service.title === "Dine" ? "/dine" : "#book"}
+                  aria-label={
+                    service.title === "Stay"
+                      ? "Explore our stay"
+                      : service.title === "Dine"
+                        ? "Explore dining at the lodge"
+                        : `Enquire about ${service.title}`
+                  }
                 >
                   <ArrowIcon />
                 </a>
@@ -368,6 +383,115 @@ function StayPage() {
         <div className="shell">
           <p className="eyebrow light">Your highland escape awaits</p>
           <h2>Make room for<br /><em>a slower moment.</em></h2>
+          <a className="button button-light" href="/#book">Plan your stay <ArrowIcon /></a>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+function DinePage() {
+  return (
+    <main className="dine-page">
+      <header className="stay-header shell">
+        <a className="brand stay-brand" href="/" aria-label="Rugambwa Safaris Lodge home">
+          <LeafMark />
+          <span>
+            Rugambwa
+            <small>Safaris Lodge</small>
+          </span>
+        </a>
+        <a className="text-link" href="/">Back to the lodge <ArrowIcon /></a>
+      </header>
+
+      <section className="dine-hero shell">
+        <img src={fineDine} alt="Outdoor dining tables set beneath a leafy tree for an evening meal" />
+        <div className="dine-hero-shade" />
+        <div className="dine-hero-copy">
+          <p className="eyebrow light">Fresh from the fire, close to the land</p>
+          <h1>A taste of<br /><em>the wild.</em></h1>
+          <p>Good food, open skies, and time around the table.</p>
+        </div>
+      </section>
+
+      <section className="dine-intro shell">
+        <p className="eyebrow">Gather, share, savour</p>
+        <p>
+          Dining at Rugambwa is unhurried and rooted in the land. Our kitchen
+          serves fresh, flame-grilled and locally inspired dishes, shared
+          outdoors under the trees, with the sounds of the wild around you.
+        </p>
+      </section>
+
+      <section className="dine-features shell" aria-label="Dining at Rugambwa">
+        <article className="dine-feature">
+          <img src={nightDining} alt="Lantern-lit garden dining beneath trees at night" />
+          <div className="dine-feature-copy">
+            <p className="eyebrow">01 / Under the stars</p>
+            <h2>Garden<br /><em>dining.</em></h2>
+            <p className="dine-tagline">Lantern-lit evenings under the trees</p>
+            <p>
+              As dusk settles, the lawn comes alive with the glow of woven
+              lanterns and strings of lights wound through the trees. Gather
+              around low timber tables, sink into soft floor cushions, and
+              share a meal beneath the open sky. Fresh flowers and flickering
+              candles set the scene for long, relaxed evenings with the people
+              you love.
+            </p>
+          </div>
+        </article>
+        <article className="dine-feature dine-feature-reverse">
+          <img src={roasts} alt="Flame-grilled meat skewers served on fresh banana leaves" />
+          <div className="dine-feature-copy">
+            <p className="eyebrow">02 / The safari grill</p>
+            <h2>Skewers on<br /><em>banana leaf.</em></h2>
+            <p className="dine-tagline">Flame-grilled skewers, served on banana leaf</p>
+            <p>
+              Our grill is the heart of the evening. Marinated chicken, tender
+              pork, spiced sausages and juicy bites are threaded onto skewers
+              and cooked over open flame until smoky and caramelised. They’re
+              served hot on fresh banana leaves, as they would be at a bustling
+              local night market. Order a few to share, or make a feast of it.
+            </p>
+          </div>
+        </article>
+        <article className="dine-feature">
+          <img src={meals} alt="Golden plantain and banana chips in baskets lined with banana leaves" />
+          <div className="dine-feature-copy">
+            <p className="eyebrow">03 / A golden little something</p>
+            <h2>Crispy plantain<br /><em>&amp; banana chips.</em></h2>
+            <p className="dine-tagline">Golden, crunchy and made in-house</p>
+            <p>
+              Golden, crunchy and lightly salted, our house-fried plantain and
+              banana chips are served in woven baskets lined with fresh banana
+              leaves. Choose from thin crisps, thick-cut chips and sweet
+              caramelised slices. They’re ideal with a sundowner, a side to the
+              grill, or a snack while you plan tomorrow’s game drive.
+            </p>
+          </div>
+        </article>
+        <article className="dine-feature dine-feature-reverse">
+          <img src={drinks} alt="Fresh fruit coolers and citrus drinks served over ice in the garden" />
+          <div className="dine-feature-copy">
+            <p className="eyebrow">04 / Fresh coolers &amp; sundowners</p>
+            <h2>A little<br /><em>refreshment.</em></h2>
+            <p className="dine-tagline">Fresh, fruity and served ice-cold</p>
+            <p>
+              Refresh yourself with our chilled drinks station. Help yourself
+              to crisp lemon and mint water with fresh citrus slices, or a ruby
+              fruit punch with berries and orange. We also serve sparkling
+              rosemary-and-grapefruit coolers and sunny orange refreshers
+              topped with fresh raspberries. Served over ice in cut-crystal
+              glasses, they’re the perfect way to end a day in the wild.
+            </p>
+          </div>
+        </article>
+      </section>
+
+      <section className="stay-cta">
+        <div className="shell">
+          <p className="eyebrow light">Good food tastes better together</p>
+          <h2>Pull up a chair.<br /><em>Stay for supper.</em></h2>
           <a className="button button-light" href="/#book">Plan your stay <ArrowIcon /></a>
         </div>
       </section>
